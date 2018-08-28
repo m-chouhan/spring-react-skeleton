@@ -1,0 +1,21 @@
+target/*
+=======
+*.class
+*.iml
+.idea/*
+react_app/.vscode/*
+node/*
+src/main/resources/static/*
+/node_modules
+
+# Package Files #
+*.war
+*.ear
+*.classpath
+*.project
+*.settings
+*.DS_Store
+*.numbers
+.DS_Store
+
+config/local.properties
