@@ -6,10 +6,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 
 import Billing from "./Billing";
 import DriverDetails from "./DriverDetails";
+import Payments from "./Payments";
 
 function TabContainer({ children, dir }) {
   return (
@@ -77,16 +77,13 @@ class FullWidthTabs extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>
-            <DriverDetails />
+            <DriverDetails onAccept={this.nextState} />
           </TabContainer>
           <TabContainer dir={theme.direction}>
             <Billing />
           </TabContainer>
           <TabContainer dir={theme.direction}>
-            Item Three
-            <Button variant="raised" color="primary">
-              Submit
-            </Button>
+            <Payments />
           </TabContainer>
         </SwipeableViews>
       </div>

@@ -11,6 +11,9 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import { isEmpty } from "lodash";
 
 const mediaCardStyle = {
   card: {
@@ -35,7 +38,8 @@ const mediaCardStyle = {
 };
 
 function MediaCard(props) {
-  const { details, classes } = props;
+  const { details, classes, onAccept } = props;
+  if (isEmpty(details)) return <CircularProgress />;
 
   return (
     <Card className={classes.card}>
@@ -59,7 +63,7 @@ function MediaCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button onClick={onAccept} size="small" color="primary">
           Accept
         </Button>
         <Button size="small" color="primary">
@@ -77,8 +81,8 @@ const styles = theme => ({
     display: "flex",
     width: "100%",
     alignItems: "center",
-    justifyContent: "space-around",
-    flexDirection: "row",
+    justifyContent: "center",
+    flexDirection: "column",
     flexWrap: "wrap"
   },
   fetchDetailsView: {
@@ -112,7 +116,7 @@ class DriverDetails extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, onAccept } = this.props;
     return (
       <div className={classes.container}>
         <div className={classes.fetchDetailsView}>
@@ -136,7 +140,10 @@ class DriverDetails extends React.Component {
             Fetch details
           </Button>
         </div>
-        <MediaCardStyled details={this.state.driverDetails} />
+        <MediaCardStyled
+          details={this.state.driverDetails}
+          onAccept={onAccept}
+        />
       </div>
     );
   }
