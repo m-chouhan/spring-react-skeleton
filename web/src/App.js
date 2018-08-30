@@ -1,15 +1,22 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import TabView from "./TabView";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome User to React + Spring</h1>
-        </header>
-        <div>Please select dom quickly</div>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="title" color="inherit">
+              Battery Station Ui
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <TabView />
       </div>
     );
   }
