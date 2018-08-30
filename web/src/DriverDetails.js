@@ -12,7 +12,8 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
+import { interval, from } from "rxjs";
+import { sample, take } from "rxjs/operators";
 import { isEmpty } from "lodash";
 
 const mediaCardStyle = {
@@ -38,8 +39,10 @@ const mediaCardStyle = {
 };
 
 function MediaCard(props) {
-  const { details, classes, onAccept } = props;
-  if (isEmpty(details)) return <CircularProgress />;
+  const { details, classes, isLoading, onAccept } = props;
+
+  if (isLoading) return <CircularProgress />;
+  if (isEmpty(details)) return null;
 
   return (
     <Card className={classes.card}>
@@ -95,7 +98,8 @@ const styles = theme => ({
 class DriverDetails extends React.Component {
   state = {
     carNo: "",
-    driverDetails: {}
+    driverDetails: {},
+    isLoading: false
   };
 
   handleTextChange = event => {
@@ -104,15 +108,21 @@ class DriverDetails extends React.Component {
 
   fetchDetails = () => {
     console.log("Fetching details from server");
-    this.setState({
-      driverDetails: {
-        image: "https://images.indianexpress.com/2017/12/party-driver.jpg",
-        carNo: this.state.carNo,
-        address:
-          "7th Cross Rd, 3rd Block, Koramangala 1A Block," +
-          "Koramangala 3 Block, Koramangala, Bengaluru, Karnataka 560034"
-      }
-    });
+    this.setState({ isLoading: true });
+    interval(2000)
+      .pipe(take(1))
+      .subscribe(value => {
+        this.setState({
+          isLoading: false,
+          driverDetails: {
+            image: "https://images.indianexpress.com/2017/12/party-driver.jpg",
+            carNo: this.state.carNo,
+            address:
+              "7th Cross Rd, 3rd Block, Koramangala 1A Block," +
+              "Koramangala 3 Block, Koramangala, Bengaluru, Karnataka 560034"
+          }
+        });
+      });
   };
 
   render() {
@@ -143,6 +153,7 @@ class DriverDetails extends React.Component {
         <MediaCardStyled
           details={this.state.driverDetails}
           onAccept={onAccept}
+          isLoading={this.state.isLoading}
         />
       </div>
     );
