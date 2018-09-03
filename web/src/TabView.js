@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Billing from "./Billing";
 import DriverDetails from "./DriverDetails";
 import Payments from "./Payments";
+import BatterySwap from "./BatterySwap";
 
 function TabContainer({ children, dir }) {
   return (
@@ -47,7 +48,7 @@ class FullWidthTabs extends React.Component {
     this.setState({ value: index });
   };
 
-  nextState = () => {
+  gotoNextState = () => {
     const current = this.state.value;
     this.setState({ value: current + 1 });
   };
@@ -68,7 +69,8 @@ class FullWidthTabs extends React.Component {
           >
             <Tab label="1. Driver Details" />
             <Tab label="2. Bill Estimate" />
-            <Tab label="3. Payments" />
+            <Tab label="3. Swap Batteries" />
+            <Tab label="4. Payments" />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -77,10 +79,13 @@ class FullWidthTabs extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>
-            <DriverDetails onAccept={this.nextState} />
+            <DriverDetails onAccept={this.gotoNextState} />
           </TabContainer>
           <TabContainer dir={theme.direction}>
-            <Billing />
+            <Billing onAccept={this.gotoNextState} />
+          </TabContainer>
+          <TabContainer dir={theme.direction}>
+            <BatterySwap onAccept={this.gotoNextState} />
           </TabContainer>
           <TabContainer dir={theme.direction}>
             <Payments />

@@ -33,7 +33,7 @@ const styles = theme => ({
     justifyContent: "center"
   },
   card: {
-    width: 400
+    width: 600
   },
   bullet: {
     display: "inline-block",
@@ -45,7 +45,7 @@ const styles = theme => ({
     fontSize: 24
   },
   image: {
-    width: 400,
+    width: 600,
     height: 300
   }
 });
@@ -71,7 +71,7 @@ class Payments extends React.Component {
         <Card className={classes.card}>
           <CardActionArea>
             <CardMedia
-              image={rupee}
+              image="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/India_new_500_INR%2C_MG_series%2C_2016%2C_obverse.jpg/800px-India_new_500_INR%2C_MG_series%2C_2016%2C_obverse.jpg"
               className={classes.image}
               title="profile pic"
             />
