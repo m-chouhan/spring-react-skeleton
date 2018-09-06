@@ -12,8 +12,8 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { interval, from } from "rxjs";
-import { sample, take } from "rxjs/operators";
+import { interval } from "rxjs";
+import { take } from "rxjs/operators";
 import { isEmpty } from "lodash";
 
 const mediaCardStyle = {

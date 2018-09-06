@@ -6,8 +6,6 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Typography from "@material-ui/core/Typography";
-import AssignmentIcon from "@material-ui/icons/Assignment";
-import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -82,19 +80,20 @@ class Payments extends React.Component {
                 variant="headline"
                 component="h2"
               >
-                400 Rs
+                Total : 400 Rs
               </Typography>
             </CardContent>
           </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">
-              Cash
-            </Button>
-            <Button size="small" color="primary">
-              Card
-            </Button>
-          </CardActions>
         </Card>
+        <FormControl style={{ width: "50%", margin: 25 }}>
+          <InputLabel htmlFor="name-simple">Enter Amount</InputLabel>
+          <Input
+            id="name-simple"
+            value={this.state.carNo}
+            onChange={this.handleTextChange}
+          />
+        </FormControl>
+        <Button size="large">Pay Now</Button>
       </div>
     );
   }

@@ -37,28 +37,31 @@ const styles = theme => ({
 
 class Billing extends React.Component {
   state = {
-    name: "",
-    odometerValue: 0,
+    currentReading: 0,
+    previousReading: 0,
     battery_1: 0,
     battery_2: 0,
-    showBill: true,
+    totalKms: 100,
+    rate: 11,
+    showBill: false,
     checked: false
   };
 
   componentDidMount() {
     this.setState({
-      odometerValue: 9999,
+      previousReading: 990,
       battery_1: 20,
       battery_2: 90
     });
   }
   handleTextChange = event => {
-    console.log("name");
-    this.setState({ name: event.target.value });
+    this.setState({ currentReading: event.target.value });
   };
 
-  fetchDetails = () => {
+  fetchBill = () => {
     console.log("Fetching details from server");
+    const { currentReading, previousReading } = this.state;
+    this.setState({ totalKms: currentReading - previousReading });
     //this.setState({ showBill: true });
   };
 
@@ -73,32 +76,9 @@ class Billing extends React.Component {
             minValue={10}
             value={this.state.battery_1}
             maxValue={150}
-            needleTransitionDuration={4000}
+            needleTransitionDuration={9000}
             needleTransition="easeElastic"
-            currentValueText={"Battery 1 :: " + this.state.battery_1}
-          />
-          <ReactSpeedometer
-            height={200}
-            width={200}
-            minValue={10}
-            value={this.state.battery_2}
-            maxValue={150}
-            needleTransitionDuration={4000}
-            needleTransition="easeElastic"
-            currentValueText={"Battery 2 ::" + this.state.battery_2}
-          />
-        </div>
-        <div
-          className={classes.rowItems}
-          style={{ justifyContent: "center", alignItems: "center" }}
-        >
-          <InputLabel htmlFor="name-simple">Last Odometer Reading</InputLabel>
-          <Odometer
-            style={{ margin: 20 }}
-            width={200}
-            format="d"
-            duration={2000}
-            value={this.state.odometerValue}
+            currentValueText={"Battery level " + this.state.battery_1}
           />
         </div>
         <div className={classes.tripDetails}>
@@ -106,12 +86,12 @@ class Billing extends React.Component {
             <InputLabel htmlFor="name-simple">Enter Current Reading</InputLabel>
             <Input
               id="name-simple"
-              value={this.state.name}
+              value={this.state.currentReading}
               onChange={this.handleTextChange}
             />
           </FormControl>
           <Button
-            onClick={this.fetchDetails}
+            onClick={this.fetchBill}
             style={{ margin: 10 }}
             variant="raised"
             color="primary"
@@ -128,7 +108,13 @@ class Billing extends React.Component {
           in={this.state.checked}
           style={{ transitionDelay: this.state.checked ? 500 : 0 }}
         >
-          <BillingTable onAccept={onAccept} />
+          <BillingTable
+            onAccept={onAccept}
+            currentReading={this.state.currentReading}
+            previousReading={this.state.previousReading}
+            totalKms={this.state.totalKms}
+            rate={this.state.rate}
+          />
         </Zoom>
       </div>
     );

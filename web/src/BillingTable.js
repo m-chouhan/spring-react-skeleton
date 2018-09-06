@@ -18,23 +18,38 @@ const styles = theme => ({
 });
 
 function SimpleTable(props) {
-  const { classes, onAccept } = props;
+  const {
+    classes,
+    onAccept,
+    currentReading,
+    previousReading,
+    totalKms,
+    rate
+  } = props;
 
   return (
     <Paper className={classes.root}>
       <Table>
         <TableHead>
           <TableRow>
+            <TableCell>Current Reading</TableCell>
+            <TableCell>{`${currentReading}`}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Previous Reading</TableCell>
+            <TableCell>{`${previousReading}`}</TableCell>
+          </TableRow>
+          <TableRow>
             <TableCell>Total Kms</TableCell>
-            <TableCell numeric>100</TableCell>
+            <TableCell>{`${totalKms}`}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Leasing Rate</TableCell>
-            <TableCell numeric>10 rs/km</TableCell>
+            <TableCell>{`${rate}`} rs/km</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Total</TableCell>
-            <TableCell numeric>1000 rs</TableCell>
+            <TableCell>{"" + totalKms * rate}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>

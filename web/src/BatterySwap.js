@@ -6,6 +6,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import QrReader from "./QrReader";
 import Zoom from "@material-ui/core/Zoom";
 import Switch from "@material-ui/core/Switch";
 
@@ -19,41 +20,55 @@ const styles = theme => ({
   },
   rowItems: {
     display: "flex",
-    width: "100%",
+    width: "90%",
     flexDirection: "row",
-    justifyContent: "space-around"
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 
 class BatterySwap extends React.Component {
   state = {
-    battery1Id: 0,
-    battery2Id: 0
+    batteryID1: "",
+    batteryID2: "",
+    selectedBattery: 1
   };
 
+  onScan = value => {
+    const { selectedBattery } = this.state;
+    switch (selectedBattery) {
+      case 1:
+        this.setState({ batteryID1: value });
+        break;
+      case 2:
+        this.setState({ batteryID2: value });
+    }
+  };
   handleTextChange = () => {};
   render() {
     const { classes, onAccept } = this.props;
     return (
       <div className={classes.container}>
         <h1>Swap Batteries</h1>
-
-        <FormControl style={{ marginTop: 40 }}>
-          <InputLabel htmlFor="battery1">Enter Id for Battery 1</InputLabel>
-          <Input
-            id="battery1"
-            value={this.state.battery1Id}
-            onChange={this.handleTextChange}
-          />
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="battery2">Enter Id for Battery 2</InputLabel>
-          <Input
-            id="battery2"
-            value={this.state.battery2Id}
-            onChange={this.handleTextChange}
-          />
-        </FormControl>
+        <div className={classes.rowItems}>
+          <div className={classes.container}>
+            <TextField
+              onFocus={() => this.setState({ selectedBattery: 1 })}
+              id="battery1"
+              label="Battery 1"
+              value={this.state.batteryID1}
+              margin="normal"
+            />
+            <TextField
+              id="battery2"
+              label="Battery 2"
+              onFocus={() => this.setState({ selectedBattery: 2 })}
+              value={this.state.batteryID2}
+              margin="normal"
+            />
+          </div>
+          <QrReader onScan={this.onScan} />
+        </div>
         <Button
           onClick={onAccept}
           style={{ marginTop: 40 }}
